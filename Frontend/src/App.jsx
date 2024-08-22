@@ -1,32 +1,19 @@
-import { useState } from 'react'
-import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/hero/Hero'
-import Card from './components/roomsCards/Card'
-import Roominfo from './components/roomInfo/Roominfo'
+import React from 'react';
+import {BrowserRouter , Routes,Route} from "react-router-dom"
+import Home from './pages/Home';
+import Rooms from './pages/Rooms';
 
-function App() {
-
-
+const App = () => {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <div className='cards'>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-
-      </div>
-      {/* <Roominfo /> */}
-
-    </>
-  )
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rooms" element={<Rooms />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App
