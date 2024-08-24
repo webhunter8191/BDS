@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Header from "../components/Header";
 
 const Home = () => {
   const [location, setLocation] = useState("");
@@ -26,17 +27,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
       {/* Navbar */}
-      <header className="w-full p-4 flex justify-between items-center bg-white shadow-md z-10 h-[90px]">
-        <div className="text-2xl font-bold text-pink-600">Brij Divine Stay ❤️</div>
-        <div>
-          <a href="#" className="text-gray-700 mr-4">
-            Sign up
-          </a>
-          <a href="#" className="text-gray-700">
-            Log in
-          </a>
-        </div>
-      </header>
+     <Header/>
 
       {/* Main content */}
       <div className="flex flex-1 flex-col md:flex-row items-center justify-center w-full relative z-10 overflow-hidden">
@@ -47,7 +38,7 @@ const Home = () => {
           </h1>
           <p className="text-gray-500 mb-6 text-center">
             From hotels to entire homes to individual rooms – your next getaway
-            is on Airbnb.
+            is on BDS.
           </p>
 
           <div className="w-full mb-4">
