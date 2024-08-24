@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Header from "../components/Header";
 
 const Home = () => {
   const [location, setLocation] = useState("");
@@ -47,7 +48,7 @@ const Home = () => {
           </h1>
           <p className="text-gray-500 mb-6 text-center">
             From hotels to entire homes to individual rooms – your next getaway
-            is on Airbnb.
+            is on BDS.
           </p>
 
           <div className="w-full mb-4">
