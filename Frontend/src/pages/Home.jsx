@@ -30,7 +30,7 @@ const Home = () => {
         <div className="text-2xl font-bold text-pink-600">Brij Divine Stay ❤️</div>
         <div>
           <a href="#" className="text-gray-700 mr-4">
-            Sign up
+            Sign up.
           </a>
           <a href="#" className="text-gray-700">
             Log in
