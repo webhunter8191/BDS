@@ -23,15 +23,19 @@ function App() {
           </button>
         </div>
       </header>
-      <div  >
+      <div></div>
+      <div className="mb-10">
         <Imgslider />
       </div>
       <div style={{ display: "flex", gap: "2px" }}>
         <div className='mx-auto ' >
 
           <RoomDetails />
+
         </div>
-        <RoomPayCard />
+        <div className='h-full'>
+          <RoomPayCard />
+        </div>
       </div >
     </>
   )

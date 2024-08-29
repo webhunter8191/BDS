@@ -1,12 +1,13 @@
 import React from 'react'
 import Imgslider from './Imgslider/Imgslider'
+import RatingandReview from './rating&reviews/RatingandReview'
 
 const RoomDetails = () => {
     return (
         <>
 
 
-            <div className="max-w-2xl p-4   rounded-lg   ">
+            <div className="max-w-2xl p-4 rounded-lg   ">
                 <h1 className="text-3xl font-bold mb-4">BDS Sri Harshitha Grand Near Zudio - Star Bazaar, Kundalhalli Gate</h1>
                 <p className="text-sm text-muted-foreground">Gulmohar Enclave Road, Silver spring layout, Beside Zudio star bazaar, Opp Sankara Eye Hospital, Kundalahalli gate, Bangalore</p>
             </div >
@@ -41,6 +42,9 @@ const RoomDetails = () => {
                     </li>
                 </ul>
             </div>
+
+
+            <RatingandReview />
         </>
     )
 }

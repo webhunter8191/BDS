@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-const cardClasses = 'max-w-md mx-auto bg-card p-10 rounded-lg shadow-2xl'
+const cardClasses = 'max-w-md mx-auto bg-card p-10 rounded-lg shadow-2xl  '
 const primaryHeaderClasses = 'bg-pink-500 text-white p-3 rounded-t-lg text-center'
 const accentTextClasses = 'text-accent underline'
 const mutedTextClasses = 'text-muted'
