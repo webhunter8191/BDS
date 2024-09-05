@@ -10,21 +10,35 @@ const SearchBar = () => {
   const search = useSearchContext();
 
   const [destination, setDestination] = useState<string>(search.destination);
-  const [checkIn, setCheckIn] = useState<Date>(search.checkIn);
-  const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
+  const [checkIn, setCheckIn] = useState<Date | null>(search.checkIn);
+  const [checkOut, setCheckOut] = useState<Date | null>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    search.saveSearchValues(
-      destination,
-      checkIn,
-      checkOut,
-      adultCount,
-      childCount
-    );
-    navigate("/search");
+
+    if (checkIn && checkOut) {
+      // Only save the values if both checkIn and checkOut are valid dates
+      search.saveSearchValues(
+        destination,
+        checkIn,
+        checkOut,
+        adultCount,
+        childCount
+      );
+      navigate("/search");
+    } else {
+      alert("Please select valid check-in and check-out dates.");
+    }
+  };
+
+  const handleClear = () => {
+    setDestination("");
+    setCheckIn(null);
+    setCheckOut(null);
+    setAdultCount(1);
+    setChildCount(0);
   };
 
   const minDate = new Date();
@@ -34,9 +48,9 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4"
+      className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4 animate__animated animate__fadeInUp"
     >
-      <div className="flex flex-row items-center flex-1 bg-white p-2">
+      <div className="flex flex-row items-center flex-1 bg-white p-2 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
         <MdTravelExplore size={25} className="mr-2" />
         <input
           placeholder="Where are you going?"
@@ -70,10 +84,11 @@ const SearchBar = () => {
           />
         </label>
       </div>
+
       <div>
         <DatePicker
           selected={checkIn}
-          onChange={(date) => setCheckIn(date as Date)}
+          onChange={(date) => setCheckIn(date as Date | null)} // Allow null
           selectsStart
           startDate={checkIn}
           endDate={checkOut}
@@ -84,10 +99,11 @@ const SearchBar = () => {
           wrapperClassName="min-w-full"
         />
       </div>
+
       <div>
         <DatePicker
           selected={checkOut}
-          onChange={(date) => setCheckOut(date as Date)}
+          onChange={(date) => setCheckOut(date as Date | null)} // Allow null
           selectsStart
           startDate={checkIn}
           endDate={checkOut}
@@ -98,11 +114,16 @@ const SearchBar = () => {
           wrapperClassName="min-w-full"
         />
       </div>
+
       <div className="flex gap-1">
-        <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500">
+        <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500 transition-all duration-300">
           Search
         </button>
-        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500">
+        <button
+          type="button"
+          className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500 transition-all duration-300"
+          onClick={handleClear}
+        >
           Clear
         </button>
       </div>
