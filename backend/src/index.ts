@@ -19,7 +19,7 @@ cloudinary.config({
 
 const connection = mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 connection.then(() => {
-  console.log("Database connectrd succesfully");
+  console.log("Database connected succesfully");
 })
   .catch((err) => {
   console.error("Database connection Failed ",err)
@@ -30,8 +30,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  cors(
-   )
+  cors({
+    origin: 'http://localhost:5174',
+    methods: ['POST', 'GET'],
+    allowedHeaders:['Content-Type','Authorization'],
+    credentials: true,
+  })
 );
 
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
