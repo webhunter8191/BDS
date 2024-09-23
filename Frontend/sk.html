@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paradise View Hotel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Header Section -->
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="text-2xl font-bold">PV</div>
+      <nav class="space-x-6">
+        <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900">Explore</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900">Rooms</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900">About</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900">Contact</a>
+      </nav>
+      <a href="#" class="bg-yellow-600 text-white px-4 py-2 rounded">Book Now</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Left Text Section -->
+    <div class="flex flex-col justify-center space-y-6 px-6 lg:px-0">
+      <h1 class="text-5xl font-bold text-gray-800">Paradise View</h1>
+      <h2 class="text-4xl font-bold text-gray-900 leading-tight">
+        Hotel for every moment rich in emotion
+      </h2>
+      <p class="text-gray-500 text-lg">
+        Every moment feels like the first time in paradise view.
+      </p>
+      <div class="flex space-x-4">
+        <a href="#" class="bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold">Book Now</a>
+        <a href="#" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold">Take a Tour</a>
+      </div>
+    </div>
+
+    <!-- Right Image Section -->
+    <div class="relative">
+      <img src="https://via.placeholder.com/600x400" alt="Resort Image" class="w-full rounded-lg shadow-lg">
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section class="container mx-auto mt-8 px-6 lg:px-0">
+    <div class="bg-white p-6 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-5 gap-4">
+      <!-- Location -->
+      <div class="col-span-1">
+        <label class="block text-gray-600 text-sm">Location</label>
+        <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50">
+          <option>Akubo</option>
+        </select>
+      </div>
+
+      <!-- Room Type -->
+      <div class="col-span-1">
+        <label class="block text-gray-600 text-sm">Room Type</label>
+        <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50">
+          <option>Standard</option>
+        </select>
+      </div>
+
+      <!-- Person -->
+      <div class="col-span-1">
+        <label class="block text-gray-600 text-sm">Person</label>
+        <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50">
+          <option>01</option>
+        </select>
+      </div>
+
+      <!-- Check-in -->
+      <div class="col-span-1">
+        <label class="block text-gray-600 text-sm">Check-in</label>
+        <input type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50">
+      </div>
+
+      <!-- Check-out -->
+      <div class="col-span-1">
+        <label class="block text-gray-600 text-sm">Check-out</label>
+        <input type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50">
+      </div>
+
+      <!-- Book Button -->
+      <div class="col-span-1 md:col-span-5 flex justify-center mt-4">
+        <a href="#" class="bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold">Book Now</a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
