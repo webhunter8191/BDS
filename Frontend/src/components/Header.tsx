@@ -7,24 +7,24 @@ const Header = () => {
   const { isLoggedIn } = useAppContext();
 
   return (
-    <div className="bg-blue-800 py-6 shadow-md transition duration-500">
+    <div className="bg-white py-6 shadow-md transition duration-500">
       <div className="container mx-auto flex justify-between items-center animate__animated animate__fadeInDown">
-        <span className="text-3xl text-white font-bold tracking-tight">
+        <span className="text-3xl text-black font-bold tracking-tight">
           <Link to="/" className="hover:text-gray-300 transition duration-300">
-            MernHolidays.com
+            Brij Divine Stay
           </Link>
         </span>
         <span className="flex items-center space-x-4">
           {isLoggedIn ? (
             <>
               <Link
-                className="flex items-center text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+                className="flex items-center bg-[#7C6A46] text-white px-4 py-2 rounded-lg bg-{#7C6A46} hover:bg-blue-600 transition duration-300"
                 to="/my-bookings"
               >
                 My Bookings
               </Link>
               <Link
-                className="flex items-center text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+                className="flex items-center bg-[#7C6A46] text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
                 to="/my-hotels"
               >
                 My Hotels
@@ -34,7 +34,7 @@ const Header = () => {
           ) : (
             <Link
               to="/sign-in"
-              className="flex items-center bg-white text-blue-600 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition duration-300"
+              className="flex items-center bg-[#7C6A46] text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition duration-300"
             >
               <FaUserCircle className="mr-2" size={20} />
               Sign In

@@ -18,16 +18,18 @@ const Layout = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-full">
       {loading ? (
         <Loader />
       ) : (
         <>
           <Header />
-          <Hero />
-          <div className="container mx-auto">
+          {/* <div className="z-0">
+            <Hero />
+          </div> */}
+          {/* <div className="container z-10 mx-auto">
             <SearchBar />
-          </div>
+          </div> */}
           <div className="container mx-auto py-10 flex-1">{children}</div>
           <Footer />
         </>

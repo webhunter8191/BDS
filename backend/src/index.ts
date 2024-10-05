@@ -19,7 +19,7 @@ cloudinary.config({
 
 const connection = mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 connection.then(() => {
-  console.log("Database connectrd succesfully");
+  console.log("Database connected succesfully");
 })
   .catch((err) => {
   console.error("Database connection Failed ",err)
