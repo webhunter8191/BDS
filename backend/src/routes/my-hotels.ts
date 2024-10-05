@@ -21,9 +21,6 @@ router.post(
   verifyToken,
   [
     body("name").notEmpty().withMessage("Name is required"),
-    body("city").notEmpty().withMessage("City is required"),
-    body("country").notEmpty().withMessage("Country is required"),
-    body("description").notEmpty().withMessage("Description is required"),
     body("type").notEmpty().withMessage("Hotel type is required"),
     body("pricePerNight")
       .notEmpty()
@@ -33,12 +30,17 @@ router.post(
       .notEmpty()
       .isArray()
       .withMessage("Facilities are required"),
+    body("nearByTemple")
+      .notEmpty()
+      .isArray()
+      .withMessage("Nearest temples are required"),
   ],
   upload.array("imageFiles", 6),
   async (req: Request, res: Response) => {
     try {
+      console.log("req body for hotel is", req.body);
       const imageFiles = req.files as Express.Multer.File[];
-      const newHotel: HotelType = req.body;
+      const newHotel = req.body;
 
       const imageUrls = await uploadImages(imageFiles);
 
@@ -85,7 +87,7 @@ router.put(
   upload.array("imageFiles"),
   async (req: Request, res: Response) => {
     try {
-      const updatedHotel: HotelType = req.body;
+      const updatedHotel = req.body;
       updatedHotel.lastUpdated = new Date();
 
       const hotel = await Hotel.findOneAndUpdate(
