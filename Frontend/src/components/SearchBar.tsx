@@ -5,6 +5,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 
+// Sample list of temple names
+const temples = [
+  "Prem Mandir",
+  "Banke Bihari",
+  "Dwarikadish",
+  "ISKON",
+  "Nidhi Van",
+  "Krishna Janmbhoomi",
+];
+
 const SearchBar = () => {
   const navigate = useNavigate();
   const search = useSearchContext();
@@ -14,12 +24,12 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState<Date | null>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     if (checkIn && checkOut) {
-      // Only save the values if both checkIn and checkOut are valid dates
       search.saveSearchValues(
         destination,
         checkIn,
@@ -31,6 +41,11 @@ const SearchBar = () => {
     } else {
       alert("Please select valid check-in and check-out dates.");
     }
+  };
+
+  const handleSelectTemple = (temple: string) => {
+    setDestination(temple);
+    setShowDropdown(false); // Hide dropdown after selection
   };
 
   const handleClear = () => {
@@ -48,41 +63,35 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4 animate__animated animate__fadeInUp"
+      className="relative p-4 bg-cyan-800 rounded-lg shadow-lg grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 items-center gap-4 animate__animated animate__fadeInUp"
     >
-      <div className="flex flex-row items-center flex-1 bg-white p-2 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
-        <MdTravelExplore size={25} className="mr-2" />
-        <input
-          placeholder="Where are you going?"
-          className="text-md w-full focus:outline-none"
-          value={destination}
-          onChange={(event) => setDestination(event.target.value)}
-        />
-      </div>
-
-      <div className="flex bg-white px-2 py-1 gap-2">
-        <label className="items-center flex">
-          Adults:
+      <div className="relative">
+        <div
+          className="flex flex-row items-center bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          <MdTravelExplore size={25} className="mr-2 text-green-600" />
           <input
-            className="w-full p-1 focus:outline-none font-bold"
-            type="number"
-            min={1}
-            max={20}
-            value={adultCount}
-            onChange={(event) => setAdultCount(parseInt(event.target.value))}
+            placeholder="Where are you going?"
+            className="text-md w-full focus:outline-none placeholder:text-gray-400"
+            value={destination}
+            readOnly // Make input read-only
+            onFocus={() => setShowDropdown(true)} // Show dropdown on focus
           />
-        </label>
-        <label className="items-center flex">
-          Children:
-          <input
-            className="w-full p-1 focus:outline-none font-bold"
-            type="number"
-            min={0}
-            max={20}
-            value={childCount}
-            onChange={(event) => setChildCount(parseInt(event.target.value))}
-          />
-        </label>
+        </div>
+        {showDropdown && (
+          <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg w-full mt-1 max-h-60 overflow-y-auto shadow-lg">
+            {temples.map((temple) => (
+              <li
+                key={temple}
+                onClick={() => handleSelectTemple(temple)}
+                className="p-2 cursor-pointer hover:bg-gray-200"
+              >
+                {temple}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div>
@@ -95,7 +104,7 @@ const SearchBar = () => {
           minDate={minDate}
           maxDate={maxDate}
           placeholderText="Check-in Date"
-          className="min-w-full bg-white p-2 focus:outline-none"
+          className="min-w-full bg-white p-2 focus:outline-none rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
           wrapperClassName="min-w-full"
         />
       </div>
@@ -110,18 +119,18 @@ const SearchBar = () => {
           minDate={minDate}
           maxDate={maxDate}
           placeholderText="Check-out Date"
-          className="min-w-full bg-white p-2 focus:outline-none"
+          className="min-w-full bg-white p-2 focus:outline-none rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
           wrapperClassName="min-w-full"
         />
       </div>
 
       <div className="flex gap-1">
-        <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500 transition-all duration-300">
+        <button className="w-2/3 bg-blue-700 text-white h-full p-2 rounded-lg font-bold text-xl hover:bg-blue-600 transition-all duration-300">
           Search
         </button>
         <button
           type="button"
-          className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500 transition-all duration-300"
+          className="w-1/3 bg-red-700 text-white h-full p-2 rounded-lg font-bold text-xl hover:bg-red-600 transition-all duration-300"
           onClick={handleClear}
         >
           Clear

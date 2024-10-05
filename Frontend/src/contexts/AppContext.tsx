@@ -14,6 +14,7 @@ type ToastMessage = {
 type AppContext = {
   showToast: (toastMessage: ToastMessage) => void;
   isLoggedIn: boolean;
+  isAdmin: boolean;
   stripePromise: Promise<Stripe | null>;
 };
 
@@ -27,10 +28,24 @@ export const AppContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const { data, isError, isLoading } = useQuery(
+    "validateToken",
+    apiClient.validateToken,
+    {
+      retry: false,
+      onSuccess: (data) => {
+        console.log("data",data);
+        // Assuming your API returns an object with isAdmin property
+        if (data?.isAdmin !== undefined) {
+          setIsAdmin(data.isAdmin);
+        }
+      },
+    }
+  );
+ const isLoggedIn = !isError && !isLoading;
 
-  const { isError } = useQuery("validateToken", apiClient.validateToken, {
-    retry: false,
-  });
+
 
   return (
     <AppContext.Provider
@@ -38,6 +53,7 @@ export const AppContextProvider = ({
         showToast: (toastMessage) => {
           setToast(toastMessage);
         },
+        isAdmin,
         isLoggedIn: !isError,
         stripePromise,
       }}

@@ -4,8 +4,35 @@ import { HotelFormData } from "./ManageHotelForm";
 const DetailsSection = () => {
   const {
     register,
+    setValue, // Add setValue to update the selected values
+    watch, // Use watch to get the selected values for the nearbyTemple
     formState: { errors },
   } = useFormContext<HotelFormData>();
+
+   const nearbyTemples = [
+     "Prem Mandir",
+     "Banke Bihari",
+     "Dwarikadish",
+     "ISKON",
+     "Nidhi Van",
+     "Krishna Janmbhoomi",
+   ];
+   const nearbyTempleValues = watch("nearbyTemple") || [];
+   const handleTempleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+     const { value, checked } = event.target;
+
+     if (checked) {
+       // Add the temple if checked
+       setValue("nearbyTemple", [...nearbyTempleValues, value]);
+     } else {
+       // Remove the temple if unchecked
+       setValue(
+         "nearbyTemple",
+         nearbyTempleValues.filter((temple) => temple !== value)
+       );
+     }
+   };
+
 
   return (
     <div className="flex flex-col gap-4">
@@ -22,41 +49,6 @@ const DetailsSection = () => {
         )}
       </label>
 
-      <div className="flex gap-4">
-        <label className="text-gray-700 text-sm font-bold flex-1">
-          City
-          <input
-            type="text"
-            className="border rounded w-full py-1 px-2 font-normal"
-            {...register("city", { required: "This field is required" })}
-          ></input>
-          {errors.city && (
-            <span className="text-red-500">{errors.city.message}</span>
-          )}
-        </label>
-        <label className="text-gray-700 text-sm font-bold flex-1">
-          Country
-          <input
-            type="text"
-            className="border rounded w-full py-1 px-2 font-normal"
-            {...register("country", { required: "This field is required" })}
-          ></input>
-          {errors.country && (
-            <span className="text-red-500">{errors.country.message}</span>
-          )}
-        </label>
-      </div>
-      <label className="text-gray-700 text-sm font-bold flex-1">
-        Description
-        <textarea
-          rows={10}
-          className="border rounded w-full py-1 px-2 font-normal"
-          {...register("description", { required: "This field is required" })}
-        ></textarea>
-        {errors.description && (
-          <span className="text-red-500">{errors.description.message}</span>
-        )}
-      </label>
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
         Price Per Night
         <input
@@ -69,25 +61,23 @@ const DetailsSection = () => {
           <span className="text-red-500">{errors.pricePerNight.message}</span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold max-w-[50%]">
-        Star Rating
-        <select
-          {...register("starRating", {
-            required: "This field is required",
-          })}
-          className="border rounded w-full p-2 text-gray-700 font-normal"
-        >
-          <option value="" className="text-sm font-bold">
-            Select as Rating
-          </option>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <option value={num}>{num}</option>
-          ))}
-        </select>
-        {errors.starRating && (
-          <span className="text-red-500">{errors.starRating.message}</span>
+      <div className="text-gray-700 text-sm font-bold max-w-[50%]">
+        <span>Nearby Temples</span>
+        {nearbyTemples.map((temple) => (
+          <label key={temple} className="flex items-center">
+            <input
+              type="checkbox"
+              value={temple}
+              checked={nearbyTempleValues.includes(temple)} // Check if the temple is selected
+              onChange={handleTempleChange} // Custom change handler
+            />
+            <span className="ml-2">{temple}</span>
+          </label>
+        ))}
+        {errors.nearbyTemple && (
+          <span className="text-red-500">{errors.nearbyTemple.message}</span>
         )}
-      </label>
+      </div>
     </div>
   );
 };

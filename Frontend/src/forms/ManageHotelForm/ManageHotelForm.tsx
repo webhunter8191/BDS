@@ -9,17 +9,15 @@ import { useEffect } from "react";
 
 export type HotelFormData = {
   name: string;
-  city: string;
-  country: string;
-  description: string;
+
   type: string;
   pricePerNight: number;
-  starRating: number;
   facilities: string[];
   imageFiles: FileList;
   imageUrls: string[];
   adultCount: number;
   childCount: number;
+  nearbyTemple: string[];
 };
 
 type Props = {
@@ -42,18 +40,19 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
       formData.append("hotelId", hotel._id);
     }
     formData.append("name", formDataJson.name);
-    formData.append("city", formDataJson.city);
-    formData.append("country", formDataJson.country);
-    formData.append("description", formDataJson.description);
     formData.append("type", formDataJson.type);
     formData.append("pricePerNight", formDataJson.pricePerNight.toString());
-    formData.append("starRating", formDataJson.starRating.toString());
+   formDataJson.nearbyTemple.forEach((temple) => {
+     formData.append("nearByTemple[]", temple); // Allow multiple entries
+   });
+   
     formData.append("adultCount", formDataJson.adultCount.toString());
     formData.append("childCount", formDataJson.childCount.toString());
 
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
+      
 
     if (formDataJson.imageUrls) {
       formDataJson.imageUrls.forEach((url, index) => {
@@ -65,6 +64,7 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
       formData.append(`imageFiles`, imageFile);
     });
 
+    console.log("formadata is",formData)
     onSave(formData);
   });
 
