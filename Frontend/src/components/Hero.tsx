@@ -17,7 +17,7 @@ const Hero = () => {
     //   </div>
     // </div>
 
-    <div className="bg-white flex flex-col items-center  py-10">
+    <div className="bg-white flex flex-col items-center  py-1">
     {/* Hero Section */}
     <div className="container mx-auto flex flex-col lg:flex-row items-center justify-evenly space-y-6 lg:space-y-0 lg:space-x-8 mb-10">
       {/* Text Section */}
