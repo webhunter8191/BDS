@@ -30,11 +30,17 @@ router.post(
     check("password", "Password with 6 or more characters required")
   ],
   async (req: Request, res: Response) => {
+    console.log("req body is", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ message: errors.array() });
     }
-
+    const { firstName, lastName, email, password, confirmPassword, isAdmin } =
+      req.body;
+    
+       if (password !== confirmPassword) {
+         return res.status(400).json({ message: "Passwords do not match" });
+       }
     try {
       let user = await User.findOne({
         email: req.body.email,
@@ -44,11 +50,18 @@ router.post(
         return res.status(400).json({ message: "User already exists" });
       }
 
-      user = new User(req.body);
+      
+      user = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+        isAdmin: isAdmin !== undefined ? isAdmin : false, 
+      });
       await user.save();
 
       const token = jwt.sign(
-        { userId: user.id },
+        { userId: user.id ,isAdmin:user.isAdmin},
         process.env.JWT_SECRET_KEY as string,
         {
           expiresIn: "1d",
