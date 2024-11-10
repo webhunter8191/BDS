@@ -1,18 +1,32 @@
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import { useAppContext } from "../contexts/AppContext";
 
 const SignOutButton = () => {
   const queryClient = useQueryClient();
-  const { showToast } = useAppContext();
+ // Remove showToast, SweetAlert is now used
 
   const mutation = useMutation(apiClient.signOut, {
     onSuccess: async () => {
       await queryClient.invalidateQueries("validateToken");
-      showToast({ message: "Signed Out!", type: "SUCCESS" });
+
+      // Use SweetAlert for success message
+      Swal.fire({
+        icon: "success",
+        title: "Signed Out!",
+        text: "You have successfully signed out.",
+        confirmButtonColor: "#8B5DFF",
+      });
     },
     onError: (error: Error) => {
-      showToast({ message: error.message, type: "ERROR" });
+      // Use SweetAlert for error message
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error.message,
+        confirmButtonColor: "#8B5DFF",
+      });
     },
   });
 
@@ -23,7 +37,7 @@ const SignOutButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="text-blue-600 px-3 font-bold bg-white hover:bg-gray-100 "
+      className="flex items-center bg-[#4A3B5B]  text-white px-4 py-2 rounded-lg hover:bg-[#372D4A] transition duration-300"
     >
       Sign Out
     </button>

@@ -23,17 +23,21 @@ const ImagesSection = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-3">Images</h2>
+    <div className="mb-8">
+      <h2 className="text-2xl font-semibold mb-4">Images</h2>
       <div className="border rounded p-4 flex flex-col gap-4">
-        {existingImageUrls && (
-          <div className="grid grid-cols-6 gap-4">
+        {existingImageUrls && existingImageUrls.length > 0 && (
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
             {existingImageUrls.map((url) => (
-              <div className="relative group">
-                <img src={url} className="min-h-full object-cover" />
+              <div key={url} className="relative group">
+                <img
+                  src={url}
+                  alt="Hotel"
+                  className="w-full h-full object-cover rounded"
+                />
                 <button
                   onClick={(event) => handleDelete(event, url)}
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white"
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white rounded"
                 >
                   Delete
                 </button>
@@ -41,12 +45,11 @@ const ImagesSection = () => {
             ))}
           </div>
         )}
-
         <input
           type="file"
           multiple
           accept="image/*"
-          className="w-full text-gray-700 font-normal"
+          className="w-full text-gray-700 font-normal mt-4"
           {...register("imageFiles", {
             validate: (imageFiles) => {
               const totalLength =
@@ -66,7 +69,7 @@ const ImagesSection = () => {
         />
       </div>
       {errors.imageFiles && (
-        <span className="text-red-500 text-sm font-bold">
+        <span className="text-red-500 text-sm font-medium mt-2 inline-block">
           {errors.imageFiles.message}
         </span>
       )}

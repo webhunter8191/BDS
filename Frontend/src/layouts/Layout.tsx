@@ -1,7 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader"; // New Loader component
 import { useState, useEffect } from "react";
 

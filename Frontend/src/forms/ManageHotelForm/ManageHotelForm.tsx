@@ -9,17 +9,15 @@ import { useEffect } from "react";
 
 export type HotelFormData = {
   name: string;
-  city: string;
-  country: string;
-  description: string;
+
   type: string;
   pricePerNight: number;
-  starRating: number;
   facilities: string[];
   imageFiles: FileList;
   imageUrls: string[];
   adultCount: number;
   childCount: number;
+  nearbyTemple: string[];
 };
 
 type Props = {
@@ -27,7 +25,6 @@ type Props = {
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
-
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
@@ -42,12 +39,12 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
       formData.append("hotelId", hotel._id);
     }
     formData.append("name", formDataJson.name);
-    formData.append("city", formDataJson.city);
-    formData.append("country", formDataJson.country);
-    formData.append("description", formDataJson.description);
     formData.append("type", formDataJson.type);
     formData.append("pricePerNight", formDataJson.pricePerNight.toString());
-    formData.append("starRating", formDataJson.starRating.toString());
+    formDataJson.nearbyTemple.forEach((temple) => {
+      formData.append("nearByTemple[]", temple); // Allow multiple entries
+    });
+
     formData.append("adultCount", formDataJson.adultCount.toString());
     formData.append("childCount", formDataJson.childCount.toString());
 
@@ -65,29 +62,37 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
       formData.append(`imageFiles`, imageFile);
     });
 
+    console.log("formadata is", formData);
     onSave(formData);
   });
 
-  return (
-    <FormProvider {...formMethods}>
-      <form className="flex flex-col gap-10" onSubmit={onSubmit}>
-        <DetailsSection />
-        <TypeSection />
-        <FacilitiesSection />
-        <GuestsSection />
-        <ImagesSection />
-        <span className="flex justify-end">
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
-          >
-            {isLoading ? "Saving..." : "Save"}
-          </button>
-        </span>
-      </form>
-    </FormProvider>
-  );
+
+   return (
+     <FormProvider {...formMethods}>
+       <form
+         className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto"
+         onSubmit={onSubmit}
+       >
+         <h1 className="text-3xl font-semibold text-center mb-6">
+           Manage Hotel
+         </h1>
+         <DetailsSection />
+         <TypeSection />
+         <FacilitiesSection />
+         <GuestsSection />
+         <ImagesSection />
+         <div className="flex justify-end mt-6">
+           <button
+             disabled={isLoading}
+             type="submit"
+             className="bg-blue-600 text-white py-2 px-4 font-semibold rounded-md hover:bg-blue-500 disabled:bg-gray-300"
+           >
+             {isLoading ? "Saving..." : "Save"}
+           </button>
+         </div>
+       </form>
+     </FormProvider>
+   );
 };
 
 export default ManageHotelForm;

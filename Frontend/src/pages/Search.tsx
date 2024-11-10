@@ -70,58 +70,69 @@ const Search = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-
-        <SearchBar/>  
-    <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
-    <div className="rounded-lg border border-slate-300 p-5 h-fit sticky top-10">
-        <div className="space-y-5">
-          <h3 className="text-lg font-semibold border-b border-slate-300 pb-5">
-            Filter by:
-          </h3>
-          <StarRatingFilter
-            selectedStars={selectedStars}
-            onChange={handleStarsChange}
-          />
-          <HotelTypesFilter
-            selectedHotelTypes={selectedHotelTypes}
-            onChange={handleHotelTypeChange}
-          />
-          <FacilitiesFilter
-            selectedFacilities={selectedFacilities}
-            onChange={handleFacilityChange}
-          />
-          <PriceFilter
-            selectedPrice={selectedPrice}
-            onChange={(value?: number) => setSelectedPrice(value)}
-          />
-        </div>
+    <div className="py-6 max-w-screen-xl mx-auto px-4">
+      <div className="mb-3">
+        <SearchBar />
       </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex justify-between items-center">
-          <span className="text-xl font-bold">
-            {hotelData?.pagination.total} Hotels found
-            {search.destination ? ` in ${search.destination}` : ""}
-          </span>
-          <select
-            value={sortOption}
-            onChange={(event) => setSortOption(event.target.value)}
-            className="p-2 border rounded-md"
-          >
-            <option value="">Sort By</option>
-            <option value="starRating">Star Rating</option>
-            <option value="pricePerNightAsc">
-              Price Per Night (low to high)
-            </option>
-            <option value="pricePerNightDesc">
-              Price Per Night (high to low)
-            </option>
-          </select>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-6">
+        {/* Filters Sidebar */}
+        <div className="rounded-lg border border-slate-300 p-6 sticky top-10 h-fit bg-white shadow-lg">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-semibold text-gray-800 border-b pb-4">
+              Filter by:
+            </h3>
+            <StarRatingFilter
+              selectedStars={selectedStars}
+              onChange={handleStarsChange}
+            />
+            <HotelTypesFilter
+              selectedHotelTypes={selectedHotelTypes}
+              onChange={handleHotelTypeChange}
+            />
+            <FacilitiesFilter
+              selectedFacilities={selectedFacilities}
+              onChange={handleFacilityChange}
+            />
+            <PriceFilter
+              selectedPrice={selectedPrice}
+              onChange={(value?: number) => setSelectedPrice(value)}
+            />
+          </div>
         </div>
-        {hotelData?.data.map((hotel) => (
-          <SearchResultsCard hotel={hotel} />
-        ))}
-        <div>
+
+        {/* Search Results */}
+        <div className="flex flex-col gap-6">
+          {/* Results Header and Sorting Dropdown */}
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-gray-800">
+              {hotelData?.pagination.total} Hotels found
+              {search.destination ? ` in ${search.destination}` : ""}
+            </span>
+            <select
+              value={sortOption}
+              onChange={(event) => setSortOption(event.target.value)}
+              className="p-3 border rounded-md shadow-md text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="">Sort By</option>
+              <option value="starRating">Star Rating</option>
+              <option value="pricePerNightAsc">
+                Price Per Night (low to high)
+              </option>
+              <option value="pricePerNightDesc">
+                Price Per Night (high to low)
+              </option>
+            </select>
+          </div>
+
+          {/* Search Results Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 gap-6">
+            {hotelData?.data.map((hotel) => (
+              <SearchResultsCard key={hotel.id} hotel={hotel} />
+            ))}
+          </div>
+
+          {/* Pagination */}
           <Pagination
             page={hotelData?.pagination.page || 1}
             pages={hotelData?.pagination.pages || 1}
@@ -129,7 +140,6 @@ const Search = () => {
           />
         </div>
       </div>
-    </div>
     </div>
   );
 };
